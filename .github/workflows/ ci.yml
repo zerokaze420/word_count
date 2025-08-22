@@ -1,0 +1,46 @@
+# .github/workflows/ci.yml
+
+name: Rust CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      # 新增：缓存 Cargo 依赖项
+      - name: Cache Cargo dependencies
+        uses: actions/cache@v4
+        with:
+          # 缓存文件的路径
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          # 缓存的 key。当 Cargo.lock 文件改变时，会创建新的缓存
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          # 如果 key 未命中，会尝试使用 restore-keys 恢复部分缓存
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+
+      - name: Build project
+        run: cargo build --verbose
+
+      - name: Run tests
+        run: cargo test --verbose
