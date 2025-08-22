@@ -5,7 +5,7 @@ pub fn reduce(_word: &str, counts: Vec<i32>) -> i32 {
 }
 
 
-pub fn shufffle_and_group(map_output:   Vec<(String, i32)>) -> HashMap<String, Vec<i32>>{
+pub fn shuffle_and_group(map_output:   Vec<(String, i32)>) -> HashMap<String, Vec<i32>>{
     let mut grouped_data = HashMap::new();
 
     for (word, count) in map_output {
