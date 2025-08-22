@@ -25,11 +25,9 @@ mod tests {
 
         let mut result = map(text);
 
-        // 为了确保测试的稳定性，我们对结果进行排序，因为 hashmap 或并发处理可能不保证顺序
         result.sort();
         expected.sort();
         
-        // 比较结果是否和预期一致
         assert_eq!(result, expected);
     }
 
