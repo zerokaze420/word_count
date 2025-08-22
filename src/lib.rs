@@ -1,6 +1,3 @@
-use std::collections::HashMap;
-
-
 pub fn map(contents: &str) -> Vec<(String,i32)> {
     contents
     .split_whitespace()
@@ -34,4 +31,6 @@ mod tests {
         // 比较结果是否和预期一致
         assert_eq!(result, expected);
     }
+
+  
 }
